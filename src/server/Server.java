@@ -68,15 +68,10 @@ public class Server {
                     }
                 }
             } catch (Exception e) {
-                System.out.println("Error:" + socket);
+                System.out.println(e.getMessage());
             } finally {
-                try {
-                    this.socket.close();
-                    this.serverSocket.close();
-                } catch (IOException e) {
-                    System.out.println(e);
-                }
-                System.out.println("Closed: " + socket);
+                this.serverSocket.close();
+                System.out.println("Connection terminated");
             }
         }
     }
