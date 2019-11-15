@@ -1,17 +1,15 @@
 package server;
 
-import java.io.IOException;
-import java.io.PrintWriter;
+import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.Scanner;
 
 public class Server {
     private final int PORT = 1234;
     private ServerSocket serverSocket;
     private Socket socket;
-    private Scanner in;
-    private PrintWriter out;
+    private DataInputStream in;
+    private DataOutputStream out;
     private Race race;
 
     public Server() throws IOException {
@@ -20,12 +18,12 @@ public class Server {
         System.out.println("Waiting for client...");
     }
 
-    private String getClientInput() {
-        return this.in.nextLine();
+    private String getClientInput() throws IOException {
+        return this.in.readUTF();
     }
 
-    private void sendToClient(String msg) {
-        this.out.println(msg);
+    private void sendToClient(String msg) throws IOException {
+        this.out.writeUTF(msg);
     }
 
     public void init() throws IOException {
@@ -34,13 +32,12 @@ public class Server {
             System.out.println("Client connected...");
 
             try {
-                this.in = new Scanner(this.socket.getInputStream());
-                this.out = new PrintWriter(socket.getOutputStream(), true);
+                this.in = new DataInputStream(this.socket.getInputStream());
+                this.out = new DataOutputStream(socket.getOutputStream());
                 this.race = new Race();
 
-                String msg;
-                while (this.in.hasNextLine()) {
-                    msg = this.getClientInput();
+                while (true) {
+                    String msg = this.getClientInput();
 
                     switch (msg) {
                         case "1":
@@ -60,7 +57,7 @@ public class Server {
                             break;
                         case "3":
                             System.out.println("Sending turtles to the client");
-                            sendToClient(Integer.toString(this.race.getTurtles()));
+                            sendToClient(this.race.getTurtles());
                             break;
                         case "5":
                             System.out.println("Terminating socket connection");
@@ -69,8 +66,6 @@ public class Server {
                             System.out.println("Unknown");
                             break;
                     }
-
-
                 }
             } catch (Exception e) {
                 System.out.println("Error:" + socket);

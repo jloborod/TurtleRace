@@ -1,5 +1,7 @@
 package server;
 import java.util.*;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Collectors;
 
 public class Race {
     private ArrayList<Turtle> turtles;
@@ -20,8 +22,16 @@ public class Race {
         this.turtles.remove(position -1);
     }
 
-    public Integer getTurtles() {
-        return this.turtles.size();
+    public String getTurtles() {
+        AtomicInteger index = new AtomicInteger(1);
+        String title = "Turtle List:";
+        String separator = "\n---------------------------------\n";
+        String turtlesString = this.turtles
+                .stream()
+                .map(turtle -> String.format("Turtle %s: %s", index.getAndIncrement(), turtle.toString()))
+                .collect(Collectors.joining("\n"));
+
+        return title + separator + turtlesString + separator;
     }
 }
 
