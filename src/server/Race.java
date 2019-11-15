@@ -2,9 +2,13 @@ package server;
 import java.util.*;
 
 public class Race {
-    private List<Turtle> turtles;
+    private ArrayList<Turtle> turtles;
 
-    public Race(List<Turtle> turtles) {
+    public Race() {
+        this.turtles = new ArrayList<Turtle>();
+    }
+
+    public Race(ArrayList<Turtle> turtles) {
         this.turtles = turtles;
     }
 
@@ -16,8 +20,8 @@ public class Race {
         this.turtles.remove(position -1);
     }
 
-    public List<Turtle> getTurtles() {
-        return this.turtles;
+    public Integer getTurtles() {
+        return this.turtles.size();
     }
 }
 

@@ -31,7 +31,7 @@ public class Client {
         this.out.println(msg);
     }
 
-    private void menu() {
+    private void menu() throws IOException {
         System.out.println("OPTIONS:");
         System.out.println("1. Add Turtle");
         System.out.println("2. Remove Turtle");
@@ -44,14 +44,40 @@ public class Client {
         switch (option) {
             case "1":
                 this.sendToServer(option);
+                System.out.print("Introduce turtle name: ");
                 this.sendToServer(this.getUserInput());
+                System.out.print("Introduce turtle dorsal: ");
                 this.sendToServer(this.getUserInput());
                 System.out.println(this.getServerInput());
+                this.menu();
+                break;
+            case "2":
+                this.sendToServer(option);
+                System.out.print("Introduce turtle position: ");
+                this.sendToServer(this.getUserInput());
+                System.out.println(this.getServerInput());
+                this.menu();
+                break;
+            case "3":
+                this.sendToServer(option);
+                System.out.println(this.getServerInput());
+                this.menu();
+                break;
+            case "4":
+//                this.sendToServer(option);
+                System.out.println("Coming soon...");
+                this.menu();
+                break;
+            case "5":
+                System.out.println("Exiting...");
+                this.sendToServer(option);
+                this.socket.close();
                 break;
             default:
-                System.out.println("Uknown");
+                System.out.println("Unknown option");
+                this.menu();
+                break;
         }
-        this.menu();
     }
 
     public void init() throws IOException {
@@ -62,10 +88,5 @@ public class Client {
         this.out = new PrintWriter(socket.getOutputStream(), true);
 
         this.menu();
-
-//        while (this.userInput.hasNextLine()) {
-//            this.sendToServer(this.getUserInput());
-//            System.out.println(this.getServerInput());
-//        }
     }
 }

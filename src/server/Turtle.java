@@ -24,4 +24,8 @@ public class Turtle {
     public void setDorsal(String dorsal) {
         this.dorsal = dorsal;
     }
+
+    public String toString() {
+        return String.format("Name: %s and dorsal: %s", this.name, this.dorsal);
+    }
 }
