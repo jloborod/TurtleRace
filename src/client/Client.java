@@ -19,6 +19,18 @@ public class Client {
         this.userInput = new Scanner(System.in);
     }
 
+    private String getUserInput() {
+        return this.userInput.nextLine();
+    }
+
+    private String getServerInput() {
+        return this.in.nextLine();
+    }
+
+    private void sendToServer(String msg) {
+        this.out.println(msg);
+    }
+
     public void init() throws IOException {
         System.out.println("Client initialised!");
 
@@ -27,8 +39,8 @@ public class Client {
         this.out = new PrintWriter(socket.getOutputStream(), true);
 
         while (this.userInput.hasNextLine()) {
-            this.out.println(this.userInput.nextLine());
-            System.out.println(this.in.nextLine());
+            this.sendToServer(this.getUserInput());
+            System.out.println(this.getServerInput());
         }
     }
 }

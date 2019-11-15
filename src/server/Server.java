@@ -19,6 +19,14 @@ public class Server {
         System.out.println("Waiting for client...");
     }
 
+    private String getClientInput() {
+        return this.in.nextLine();
+    }
+
+    private void sendToClient(String msg) {
+        this.out.println(msg);
+    }
+
     public void init() throws IOException {
         while (true) {
             this.socket = this.serverSocket.accept();
@@ -28,9 +36,9 @@ public class Server {
                 this.in = new Scanner(this.socket.getInputStream());
                 this.out = new PrintWriter(socket.getOutputStream(), true);
                 while (this.in.hasNextLine()) {
-                    String msg = this.in.nextLine();
+                    String msg = this.getClientInput();
                     System.out.println(msg);
-                    this.out.println(msg);
+                    this.sendToClient(msg);
                 }
             } catch (Exception e) {
                 System.out.println("Error:" + socket);
