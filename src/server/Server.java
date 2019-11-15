@@ -35,10 +35,28 @@ public class Server {
             try {
                 this.in = new Scanner(this.socket.getInputStream());
                 this.out = new PrintWriter(socket.getOutputStream(), true);
+                String msg;
                 while (this.in.hasNextLine()) {
-                    String msg = this.getClientInput();
-                    System.out.println(msg);
-                    this.sendToClient(msg);
+                    msg = this.getClientInput();
+//                    System.out.println(msg);
+//                    this.sendToClient(msg);
+
+                    switch(msg) {
+                        case "1":
+                            System.out.println(msg.equals("1"));
+                            String name = this.getClientInput();
+                            System.out.println("> " + name);
+                            String dorsal = this.getClientInput();
+                            System.out.println("> " + dorsal);
+                            sendToClient("Turtle " + name + " with dorsal " + dorsal + "has been created!");
+                            break;
+                        default:
+                            System.out.println("Unknown");
+                            break;
+                    }
+
+
+
                 }
             } catch (Exception e) {
                 System.out.println("Error:" + socket);

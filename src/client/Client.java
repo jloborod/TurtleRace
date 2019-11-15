@@ -31,6 +31,29 @@ public class Client {
         this.out.println(msg);
     }
 
+    private void menu() {
+        System.out.println("OPTIONS:");
+        System.out.println("1. Add Turtle");
+        System.out.println("2. Remove Turtle");
+        System.out.println("3. Show Turtles");
+        System.out.println("4. Start race");
+        System.out.println("5. Exit");
+
+        String option = this.getUserInput();
+
+        switch (option) {
+            case "1":
+                this.sendToServer(option);
+                this.sendToServer(this.getUserInput());
+                this.sendToServer(this.getUserInput());
+                System.out.println(this.getServerInput());
+                break;
+            default:
+                System.out.println("Uknown");
+        }
+        this.menu();
+    }
+
     public void init() throws IOException {
         System.out.println("Client initialised!");
 
@@ -38,9 +61,11 @@ public class Client {
         this.in = new Scanner(socket.getInputStream());
         this.out = new PrintWriter(socket.getOutputStream(), true);
 
-        while (this.userInput.hasNextLine()) {
-            this.sendToServer(this.getUserInput());
-            System.out.println(this.getServerInput());
-        }
+        this.menu();
+
+//        while (this.userInput.hasNextLine()) {
+//            this.sendToServer(this.getUserInput());
+//            System.out.println(this.getServerInput());
+//        }
     }
 }
