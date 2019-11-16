@@ -34,5 +34,27 @@ public class Race {
 
         return title + separator + turtlesString + separator;
     }
+
+    public void startRace() {
+        // Create an array of Threads
+        ArrayList<Thread> turtlesRunning = (ArrayList<Thread>) this.turtles
+                .stream()
+                .map(turtle -> new Thread(turtle, turtle.getName()))
+                .collect(Collectors.toList());
+
+        // Start each thread
+        turtlesRunning.stream().forEach(t -> {
+            t.start();
+        });
+
+        // Join each thread
+        turtlesRunning.stream().forEach(t -> {
+            try {
+                t.join();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        });
+    }
 }
 
