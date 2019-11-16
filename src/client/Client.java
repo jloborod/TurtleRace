@@ -68,7 +68,8 @@ public class Client {
                 this.menu();
                 break;
             case "4":
-                System.out.println("Coming soon...");
+                this.sendToServer(option);
+                System.out.println(this.getServerInput());
 
                 this.menu();
                 break;
