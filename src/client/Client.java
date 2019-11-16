@@ -69,6 +69,7 @@ public class Client {
                 break;
             case "4":
                 this.sendToServer(option);
+                System.out.println(this.getServerInput());
 
                 this.menu();
                 break;

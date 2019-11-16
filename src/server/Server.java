@@ -61,7 +61,9 @@ public class Server {
                             break;
                         case "4":
                             System.out.println("Starting race...");
-                            this.race.startRace();
+                            System.out.println("Sending winner turtle to the client...");
+                            sendToClient(this.race.startRace());
+                            System.out.println("End of race");
                             break;
                         case "5":
                             System.out.println("Terminating socket connection");
