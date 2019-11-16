@@ -4,8 +4,7 @@ import java.util.Observable;
 import java.util.Random;
 
 public class Turtle extends Observable implements Runnable {
-    private final int GOAL = 500;
-    private final int MAX_STEP = 50;
+    private final int MAX_STEP = 10;
     private String name;
     private String dorsal;
 
@@ -44,13 +43,12 @@ public class Turtle extends Observable implements Runnable {
         int distance = 0;
         String name = Thread.currentThread().getName();
 
-        while(distance < GOAL) {
+        while(!Thread.currentThread().isInterrupted()) {
             distance += getRandomInt(0, MAX_STEP);
-        }
 
-        // Notify observer with winner
-        this.setChanged();
-        this.notifyObservers();
-        this.clearChanged();
+            this.setChanged();
+            this.notifyObservers(distance);
+            this.clearChanged();
+        }
     }
 }

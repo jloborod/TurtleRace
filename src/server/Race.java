@@ -1,4 +1,5 @@
 package server;
+
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
@@ -22,7 +23,7 @@ public class Race implements Observer {
     }
 
     public void removeTurtle(int position) {
-        this.turtles.remove(position -1);
+        this.turtles.remove(position - 1);
     }
 
     public String getTurtles() {
@@ -71,10 +72,16 @@ public class Race implements Observer {
 
     @Override
     public void update(Observable observable, Object arg) {
-        this.winner = (Turtle) observable;
+        int distance = (int) arg;
 
-        // Interrupt other threads
-        this.turtlesRunning.stream().forEach(turtle -> turtle.interrupt());
+        if (distance > GOAL) {
+            // Interrupt other threads
+            for (int i = 0; i < this.turtlesRunning.size(); i++) {
+                this.turtlesRunning.get(i).interrupt();
+            }
+
+            this.winner = (Turtle) observable;
+        }
     }
 }
 
